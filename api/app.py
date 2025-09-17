@@ -1,7 +1,6 @@
 from contextlib import asynccontextmanager
-import httpx
-from fastapi import FastAPI, Request, Depends
-from services.coc_client import CoCClient
+from fastapi import FastAPI
+from services.coc.client import CoCClient
 
 
 @asynccontextmanager
@@ -13,8 +12,8 @@ async def lifespan(app: FastAPI):
     finally:
         await coc.close()
 
-app = FastAPI(title="CoC API Gateway", lifespan=lifespan)
 
+app = FastAPI(title="CoC API Gateway", lifespan=lifespan)
 
 
 @app.get("/healthz")
