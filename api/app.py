@@ -1,10 +1,12 @@
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
-from fastapi import Depends, FastAPI
+from fastapi import APIRouter, Depends, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from services.coc.client import CoCClient
+from services.coc.types import ClanInfo, CurrentWar
 from shared.database import DatabaseManager, init_models
 from shared.settings import settings
 
@@ -22,10 +24,21 @@ async def lifespan(app: FastAPI):
         await DatabaseManager.dispose_engine(settings.POSTGRES_URL)
 
 
-app = FastAPI(title="CoC API Gateway", lifespan=lifespan)
+app = FastAPI(title="CoC API Gateway", lifespan=lifespan, docs_url="/api/docs")
 
 
-@app.get("/healthz")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+api = APIRouter(prefix="/api")
+
+
+@api.get("/healthz")
 async def healthz():
     return {"ok": True}
 
@@ -39,11 +52,22 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
         yield session
 
 
-@app.get("/current_war")
+@api.get("/current_war", response_model=CurrentWar)
 async def current_war(client: CoCClient = Depends(get_coc_client)):
     return await client.current_war()
 
 
-@app.get("/clan_info")
+@api.get("/clan_info", response_model=ClanInfo)
 async def clan_info(client: CoCClient = Depends(get_coc_client)):
     return await client.clan_info()
+
+
+@api.get("/zolta_kartka")
+async def zolta_kartka(client: CoCClient = Depends(get_coc_client)):
+    # potrzebuje przeiterowac po modelu playera,
+    # dowiedziec sie ile dni jest afk, jesli pow 1 to go zwraca w liscie z przypisanym powodem
+    # dalej przeiterowac po jego statach z wojen jesli nie zaatakowal to zwrocic z przypisanym powodem i statami na wojnach poszczegolnych
+    ...
+
+
+app.include_router(api)

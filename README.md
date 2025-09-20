@@ -15,5 +15,5 @@ uvicorn api.app:app
 
 ## Swagger
 ```
-http://localhost:8000/docs
+http://localhost:8000/api/docs
 ```
