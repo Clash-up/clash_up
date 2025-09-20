@@ -13,6 +13,16 @@
 uvicorn api.app:app
 ```
 
+## To set up the database
+```
+inv run-postgres
+```
+
+## To load initial data
+```
+inv load-initial-data
+```
+
 ## Swagger
 ```
 http://localhost:8000/api/docs
