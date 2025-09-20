@@ -1,7 +1,7 @@
 import httpx
 from typing import Any, Optional, Dict
 
-from shared import settings
+from shared.settings import settings
 from shared.utils import encode_tag as e
 from services.coc.types import ClanInfo, CurrentWar
 
