@@ -1,9 +1,10 @@
-import httpx
-from typing import Any, Optional, Dict
+from typing import Any, Dict, Optional
 
+import httpx
+
+from services.coc.types import ClanInfo, CurrentWar
 from shared.settings import settings
 from shared.utils import encode_tag as e
-from services.coc.types import ClanInfo, CurrentWar
 
 
 class CoCClient:

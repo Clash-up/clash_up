@@ -1,5 +1,6 @@
 from enum import StrEnum
-from pydantic import BaseModel, alias_generators, ConfigDict
+
+from pydantic import BaseModel, ConfigDict, alias_generators
 
 
 # Nie spotkałem się z niektórymi stanami, ale są w swaggerze coc'a

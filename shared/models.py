@@ -1,9 +1,11 @@
-from pydantic import NonNegativeInt
-from shared.types import Role
 import uuid
+
+from pydantic import NonNegativeInt
+from sqlalchemy import Enum, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import String, Integer, Enum
+
 from shared.database import Base
+from shared.types import Role
 
 
 class BaseClashModel(Base):

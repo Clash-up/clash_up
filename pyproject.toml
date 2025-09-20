@@ -21,3 +21,5 @@ line-length = 100
 [tool.ruff.lint.mccabe]
 max-complexity = 15
 
+[tool.ruff.lint]
+extend-select = ["I"]

@@ -1,7 +1,9 @@
-from pydantic import Field, NonNegativeInt, PositiveInt, NonNegativeFloat
-from shared.types import WarState, Role, ClashBaseModel, BattleModifier
 import datetime
 import typing
+
+from pydantic import Field, NonNegativeFloat, NonNegativeInt, PositiveInt
+
+from shared.types import BattleModifier, ClashBaseModel, Role, WarState
 
 
 class ClanMemberInWar(ClashBaseModel):

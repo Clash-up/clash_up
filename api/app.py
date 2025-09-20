@@ -1,8 +1,10 @@
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Depends
 from typing import AsyncGenerator
-from services.coc.client import CoCClient
+
+from fastapi import Depends, FastAPI
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from services.coc.client import CoCClient
 from shared.database import DatabaseManager, init_models
 from shared.settings import settings
 
