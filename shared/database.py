@@ -89,18 +89,19 @@ class DatabaseManager:
         Returns:
             async_sessionmaker: Fabryka sesji bazy danych.
         """
-        url = cls._key(url)
-        if url in cls._sessionmakers:
-            return cls._sessionmakers[url]
-        lock = cls._locks[url]
+        key = cls._key(url)
+        if key in cls._sessionmakers:
+            return cls._sessionmakers[key]
+        engine = await cls.get_engine(url, echo=echo)
+        lock = cls._locks[key]
         async with lock:
-            if url in cls._sessionmakers:
-                return cls._sessionmakers[url]
-            engine = await cls.get_engine(url, echo=echo)
-            cls._sessionmakers[url] = async_sessionmaker(
+            if key in cls._sessionmakers:
+                return cls._sessionmakers[key]
+
+            cls._sessionmakers[key] = async_sessionmaker(
                 bind=engine, expire_on_commit=expire_on_commit
             )
-            return cls._sessionmakers[url]
+            return cls._sessionmakers[key]
 
     @classmethod
     @asynccontextmanager

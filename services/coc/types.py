@@ -3,18 +3,30 @@ import typing
 
 from pydantic import Field, NonNegativeFloat, NonNegativeInt, PositiveInt
 
-from shared.types import BattleModifier, ClashBaseModel, Role, WarState
+from shared.pyd_models import ClashBasePydModel
+from shared.types import BattleModifier, Role, WarState
 
 
-class ClanMemberInWar(ClashBaseModel):
+class ClanMemberAttack(ClashBasePydModel):
+    attacker_tag: str
+    defender_tag: str
+    stars: NonNegativeInt
+    destruction_percentage: NonNegativeFloat
+    order: PositiveInt
+    duration: PositiveInt
+
+
+class ClanMemberInWar(ClashBasePydModel):
     tag: str
     name: str
     townhall_level: NonNegativeInt
     map_position: PositiveInt
+    attacks: list[ClanMemberAttack]  # max 2
     opponent_attacks: NonNegativeInt
+    best_opponent_attack: ClanMemberAttack
 
 
-class ClanInWar(ClashBaseModel):
+class ClanInWar(ClashBasePydModel):
     tag: str
     name: str
     attacks: NonNegativeInt
@@ -23,7 +35,7 @@ class ClanInWar(ClashBaseModel):
     members: list[ClanMemberInWar]
 
 
-class CurrentWar(ClashBaseModel):
+class CurrentWar(ClashBasePydModel):
     state: WarState
     team_size: NonNegativeInt
     attacks_per_member: NonNegativeInt
@@ -35,17 +47,17 @@ class CurrentWar(ClashBaseModel):
     opponent: ClanInWar
 
 
-class League(ClashBaseModel):
+class League(ClashBasePydModel):
     id: PositiveInt
     name: str
 
 
-class BuilderBaseLeague(ClashBaseModel):
+class BuilderBaseLeague(ClashBasePydModel):
     id: PositiveInt
     name: str
 
 
-class ClanMember(ClashBaseModel):
+class ClanMember(ClashBasePydModel):
     tag: str
     name: str
     role: Role
@@ -61,31 +73,31 @@ class ClanMember(ClashBaseModel):
     builder_base_league: BuilderBaseLeague
 
 
-class ChatLanguage(ClashBaseModel):
+class ChatLanguage(ClashBasePydModel):
     id: PositiveInt
     name: str
     language_code: str
 
 
-class ClanLocation(ClashBaseModel):
+class ClanLocation(ClashBasePydModel):
     id: PositiveInt
     name: str
     is_country: bool
     country_code: str
 
 
-class ClanDistrict(ClashBaseModel):
+class ClanDistrict(ClashBasePydModel):
     id: PositiveInt
     name: str
     level: PositiveInt = Field(alias="districtHallLevel")
 
 
-class ClanCapital(ClashBaseModel):
+class ClanCapital(ClashBasePydModel):
     level: PositiveInt = Field(alias="capitalHallLevel")
     districts: list[ClanDistrict]
 
 
-class ClanInfo(ClashBaseModel):
+class ClanInfo(ClashBasePydModel):
     tag: str
     name: str
     description: str

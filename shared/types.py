@@ -1,7 +1,5 @@
 from enum import StrEnum
 
-from pydantic import BaseModel, ConfigDict, alias_generators
-
 
 # Nie spotkałem się z niektórymi stanami, ale są w swaggerze coc'a
 class WarState(StrEnum):
@@ -28,7 +26,3 @@ class Role(StrEnum):
 class BattleModifier(StrEnum):
     NONE = "none"
     HARD_MODE = "hard_mode"
-
-
-class ClashBaseModel(BaseModel):
-    model_config = ConfigDict(alias_generator=alias_generators.to_camel, populate_by_name=True)

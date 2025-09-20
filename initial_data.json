@@ -1,0 +1,93 @@
+{
+  "players": [
+    {
+      "id": "11111111-1111-1111-1111-111111111111",
+      "name": "Janek",
+      "tag": "#AAA111",
+      "trophies": 1200,
+      "donations": 10,
+      "donations_received": 5,
+      "role": "member",
+      "town_hall_level": 9,
+      "cw_attacks": [
+        {
+          "id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+          "war_id": "dddddddd-dddd-dddd-dddd-dddddddddddd",
+          "stars": 3,
+          "destruction_percentage": 95,
+          "duration": 150
+        }
+      ]
+    },
+    {
+      "id": "22222222-2222-2222-2222-222222222222",
+      "name": "Basia",
+      "tag": "#BBB222",
+      "trophies": 1800,
+      "donations": 20,
+      "donations_received": 10,
+      "role": "admin",
+      "town_hall_level": 11,
+      "cw_attacks": [
+        {
+          "id": "ea0066eb-88d9-4321-a27b-c2823d229f91",
+          "war_id": "afd8d47f-6459-4ce6-acbd-bd2ca6d2466e",
+          "stars": null,
+          "destruction_percentage": null,
+          "duration": null
+        }
+      ]
+    },
+    {
+      "id": "33333333-3333-3333-3333-333333333333",
+      "name": "Kamil",
+      "tag": "#CCC333",
+      "trophies": 2200,
+      "donations": 35,
+      "donations_received": 8,
+      "role": "coLeader",
+      "town_hall_level": 12,
+      "cw_attacks": [
+        {
+          "id": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+          "war_id": "eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee",
+          "stars": 2,
+          "destruction_percentage": 85,
+          "duration": 180
+        },
+        {
+          "id": "cccccccc-cccc-cccc-cccc-cccccccccccc",
+          "war_id": "eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee",
+          "stars": 1,
+          "destruction_percentage": 60,
+          "duration": 200
+        },
+        {
+          "id": "dddddddd-dddd-dddd-dddd-dddddddddddd",
+          "war_id": "fffffffff-ffff-ffff-ffff-fffffffffff",
+          "stars": 1,
+          "destruction_percentage": 35,
+          "duration": 180
+        },
+        {
+          "id": "eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee",
+          "war_id": "fffffffff-ffff-ffff-ffff-fffffffffff",
+          "stars": 2,
+          "destruction_percentage": 60,
+          "duration": 200
+        }
+      ]
+    },
+    {
+      "id": "44444444-4444-4444-4444-444444444444",
+      "name": "Ola",
+      "tag": "#DDD444",
+      "trophies": 950,
+      "donations": 5,
+      "donations_received": 20,
+      "role": "member",
+      "town_hall_level": 8,
+      "cw_attacks": []
+    }
+  ]
+}

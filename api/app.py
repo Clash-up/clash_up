@@ -3,11 +3,15 @@ from typing import AsyncGenerator
 
 from fastapi import APIRouter, Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from services.coc.client import CoCClient
 from services.coc.types import ClanInfo, CurrentWar
 from shared.database import DatabaseManager, init_models
+from shared.models import Player
+from shared.pyd_models import PlayerRead
 from shared.settings import settings
 
 
@@ -62,8 +66,15 @@ async def clan_info(client: CoCClient = Depends(get_coc_client)):
     return await client.clan_info()
 
 
-@api.get("/zolta_kartka")
-async def zolta_kartka(client: CoCClient = Depends(get_coc_client)):
+@api.get("/players", response_model=list[PlayerRead])
+async def list_players(session: AsyncSession = Depends(get_db)):
+    result = await session.execute(select(Player).options(selectinload(Player.cw_attacks)))
+    players = result.scalars().all()
+    return [PlayerRead.model_validate(p) for p in players]
+
+
+@api.get("/wip")
+async def wip(client: CoCClient = Depends(get_coc_client)):
     # potrzebuje przeiterowac po modelu playera,
     # dowiedziec sie ile dni jest afk, jesli pow 1 to go zwraca w liscie z przypisanym powodem
     # dalej przeiterowac po jego statach z wojen jesli nie zaatakowal to zwrocic z przypisanym powodem i statami na wojnach poszczegolnych
