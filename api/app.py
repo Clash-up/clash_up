@@ -8,7 +8,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from services.coc.client import CoCClient
-from services.coc.types import ClanInfo, CurrentWar
 from shared.database import DatabaseManager, init_models
 from shared.models import Player
 from shared.pyd_models import PlayerRead
@@ -19,12 +18,9 @@ from shared.settings import settings
 async def lifespan(app: FastAPI):
     engine = await DatabaseManager.get_engine(settings.POSTGRES_URL, echo=True)
     await init_models(engine)
-    coc = CoCClient()
-    app.state.coc = coc
     try:
         yield
     finally:
-        await coc.close()
         await DatabaseManager.dispose_engine(settings.POSTGRES_URL)
 
 
@@ -56,16 +52,6 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
         yield session
 
 
-@api.get("/current_war", response_model=CurrentWar)
-async def current_war(client: CoCClient = Depends(get_coc_client)):
-    return await client.current_war()
-
-
-@api.get("/clan_info", response_model=ClanInfo)
-async def clan_info(client: CoCClient = Depends(get_coc_client)):
-    return await client.clan_info()
-
-
 @api.get("/players", response_model=list[PlayerRead])
 async def list_players(session: AsyncSession = Depends(get_db)):
     result = await session.execute(select(Player).options(selectinload(Player.cw_attacks)))
@@ -74,7 +60,7 @@ async def list_players(session: AsyncSession = Depends(get_db)):
 
 
 @api.get("/wip")
-async def wip(client: CoCClient = Depends(get_coc_client)):
+async def wip():
     # potrzebuje przeiterowac po modelu playera,
     # dowiedziec sie ile dni jest afk, jesli pow 1 to go zwraca w liscie z przypisanym powodem
     # dalej przeiterowac po jego statach z wojen jesli nie zaatakowal to zwrocic z przypisanym powodem i statami na wojnach poszczegolnych
