@@ -53,10 +53,11 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
 
 
 @api.get("/players", response_model=list[PlayerRead])
-async def list_players(session: AsyncSession = Depends(get_db)):
+async def list_players(session: AsyncSession = Depends(get_db), stats: bool = False):
     result = await session.execute(select(Player).options(selectinload(Player.cw_attacks)))
     players = result.scalars().all()
-    return [PlayerRead.model_validate(p) for p in players]
+
+    return [PlayerRead.model_validate(p) for p in players] if stats is False else ''
 
 
 @api.get("/wip")
