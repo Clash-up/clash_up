@@ -6,6 +6,8 @@ from pydantic import Field, NonNegativeFloat, NonNegativeInt, PositiveInt
 from shared.pyd_models import ClashBasePydModel
 from shared.types import BattleModifier, Role, WarState
 
+# --- current war types ---
+
 
 class ClanMemberAttack(ClashBasePydModel):
     attacker_tag: str
@@ -47,6 +49,9 @@ class CurrentWar(ClashBasePydModel):
     opponent: ClanInWar
 
 
+# --- clan info types ---
+
+
 class League(ClashBasePydModel):
     id: PositiveInt
     name: str
@@ -67,7 +72,7 @@ class ClanMember(ClashBasePydModel):
     trophies: NonNegativeInt
     builder_base_trophies: NonNegativeInt
     clan_rank: PositiveInt
-    previous_clan_rank: PositiveInt
+    # previous_clan_rank: PositiveInt
     donations: NonNegativeInt
     donations_received: NonNegativeInt
     builder_base_league: BuilderBaseLeague
@@ -121,3 +126,36 @@ class ClanInfo(ClashBasePydModel):
     required_townhall_level: NonNegativeInt
     clan_capital: ClanCapital
     chat_language: ChatLanguage
+
+
+# --- player types ---
+
+
+class Player(ClashBasePydModel):
+    tag: str
+    name: str
+    town_hall_level: NonNegativeInt
+    exp_level: NonNegativeInt
+    trophies: NonNegativeInt
+    # best_trophies: NonNegativeInt
+    war_stars: NonNegativeInt
+    attack_wins: NonNegativeInt
+    defense_wins: NonNegativeInt
+    # builder_hall_level: NonNegativeInt
+    # builder_base_trophies: NonNegativeInt
+    # best_builder_base_trophies: NonNegativeInt
+    role: Role
+    # war_preference: str
+    donations: NonNegativeInt
+    donations_received: NonNegativeInt
+    # clan_capital_contributions: NonNegativeInt
+    # clan: typing.Optional[dict[str, typing.Any]]
+    # league: League
+    # builder_base_league: BuilderBaseLeague
+    # achievements: list[dict[str, typing.Any]]
+    # player_house: dict[str, typing.Any]
+    # labels: list[dict[str, typing.Any]]
+    # troops: list[dict[str, typing.Any]]
+    # heroes: list[dict[str, typing.Any]]
+    # hero_equipment: list[dict[str, typing.Any]]
+    # spells: list[dict[str, typing.Any]]

@@ -22,6 +22,10 @@ inv run-postgres
 ```
 inv load-initial-data
 ```
+or 
+```
+docker exec -i clash_up psql -U clash_up -d clash_up < dump.sql 
+```
 
 ## Swagger
 ```
