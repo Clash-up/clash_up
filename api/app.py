@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
+import uuid
 
 from fastapi import APIRouter, Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -54,11 +55,17 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
 
 
 @api.get("/players", response_model=list[PlayerRead])
-async def list_players(session: AsyncSession = Depends(get_db), stats: bool = False):
+async def list_players(session: AsyncSession = Depends(get_db)):
     result = await session.execute(select(Player).options(selectinload(Player.cw_attacks)))
     players = result.scalars().all()
 
-    return [PlayerRead.model_validate(p) for p in players] if stats is False else ''
+    return [PlayerRead.model_validate(p) for p in players]
+
+# TODO: Dokończyć i zoptymalizować końcówkę
+@api.get("/war_stats/{player_id}")
+async def plot_war_stats(player_id: str, session: AsyncSession = Depends(get_db)):
+    result = await session.execute(select(Player).where(Player.id==player_id))
+
 
 
 @api.get("/wip")
