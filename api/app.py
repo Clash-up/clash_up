@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from services.polling.managers import scheduler
-from services.proxy.client import client
+from services.proxy.client import coc_client
 from shared.database import DatabaseManager, init_models
 from shared.models import Player
 from shared.pyd_models import PlayerRead
@@ -20,11 +20,11 @@ async def lifespan(app: FastAPI):
     engine = await DatabaseManager.get_engine(settings.POSTGRES_URL)
     await init_models(engine)
     scheduler.start()
-    client.start()
+    coc_client.start()
     try:
         yield
     finally:
-        await client.close()
+        await coc_client.close()
         scheduler.shutdown()
         await DatabaseManager.dispose_engine(settings.POSTGRES_URL)
 

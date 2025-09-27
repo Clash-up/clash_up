@@ -23,7 +23,7 @@ class Settings:
     )
 
     COC_TOKEN: str = os.getenv("COC_TOKEN", "")
-    CLAN_TAG: str = os.getenv("CLAN_TAG", "%232GLCVU9QV")  # default: spacerniaki clan
+    CLAN_TAG: str = os.getenv("CLAN_TAG", "#2GLCVU9QV")  # default: spacerniaki clan
 
     # in minutes
     POLLING_PLAYER_SYNC: int = int(os.getenv("POLLING_PLAYER_SYNC", 5))  # default: 5 minutes

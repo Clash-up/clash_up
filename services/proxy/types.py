@@ -67,7 +67,7 @@ class ClanMember(ClashBasePydModel):
     trophies: NonNegativeInt
     builder_base_trophies: NonNegativeInt
     clan_rank: PositiveInt
-    previous_clan_rank: PositiveInt
+    # previous_clan_rank: PositiveInt
     donations: NonNegativeInt
     donations_received: NonNegativeInt
     builder_base_league: BuilderBaseLeague

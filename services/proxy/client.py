@@ -43,4 +43,4 @@ class CoCClient:
         return (await self.api_get(endpoint)).json()
 
 
-client = CoCClient()
+coc_client = CoCClient()
