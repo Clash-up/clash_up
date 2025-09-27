@@ -26,7 +26,7 @@ class Settings:
     CLAN_TAG: str = os.getenv("CLAN_TAG", "#2GLCVU9QV")  # default: spacerniaki clan
 
     # in minutes
-    POLLING_PLAYER_SYNC: int = int(os.getenv("POLLING_PLAYER_SYNC", 5))  # default: 5 minutes
+    POLLING_PLAYER_SYNC: int = int(os.getenv("POLLING_PLAYER_SYNC", 15))  # default: 15 minutes
 
 
 settings = Settings()

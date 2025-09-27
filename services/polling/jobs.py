@@ -9,7 +9,7 @@ from services.proxy.client import coc_client
 from shared.settings import settings
 
 if TYPE_CHECKING:
-    from sqlalchemy.ext.asyncio import AsyncSession
+    pass
 
 
 log = logging.getLogger(__name__)
@@ -33,7 +33,7 @@ class PlayerSyncJob(BaseJob):
     def build_trigger(self) -> IntervalTrigger:
         return IntervalTrigger(seconds=settings.POLLING_PLAYER_SYNC)  # to minutes later
 
-    async def _update_one(self, session: "AsyncSession", tag: str) -> None:
+    async def _update_one(self, tag: str) -> None:
         # ----------------------------------------------
         # TODO: Poniższy kod jest do refaktoru pod kątem np optymalizacji liczby zapytań do bazy
 

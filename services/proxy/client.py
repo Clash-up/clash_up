@@ -2,7 +2,7 @@ from typing import Any, Dict, Optional
 
 import httpx
 
-from services.proxy.types import ClanInfo, CurrentWar
+from services.proxy.types import ClanInfo, CurrentWar, Player
 from shared.settings import settings
 from shared.utils import encode_tag as e
 
@@ -38,9 +38,9 @@ class CoCClient:
         endpoint = f"clans/{e(clan_tag)}"
         return ClanInfo.model_validate((await self.api_get(endpoint)).json())
 
-    async def player_info(self, player_tag: str) -> Dict[str, Any]:
+    async def player_info(self, player_tag: str) -> Player:
         endpoint = f"players/{e(player_tag)}"
-        return (await self.api_get(endpoint)).json()
+        return Player.model_validate((await self.api_get(endpoint)).json())
 
 
 coc_client = CoCClient()
