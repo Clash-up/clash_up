@@ -7,7 +7,8 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from services.coc.client import CoCClient
+from services.polling.managers import scheduler
+from services.proxy.client import client
 from shared.database import DatabaseManager, init_models
 from shared.models import Player
 from shared.pyd_models import PlayerRead
@@ -16,11 +17,15 @@ from shared.settings import settings
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    engine = await DatabaseManager.get_engine(settings.POSTGRES_URL, echo=True)
+    engine = await DatabaseManager.get_engine(settings.POSTGRES_URL)
     await init_models(engine)
+    scheduler.start()
+    client.start()
     try:
         yield
     finally:
+        await client.close()
+        scheduler.shutdown()
         await DatabaseManager.dispose_engine(settings.POSTGRES_URL)
 
 
@@ -41,10 +46,6 @@ api = APIRouter(prefix="/api")
 @api.get("/healthz")
 async def healthz():
     return {"ok": True}
-
-
-def get_coc_client() -> CoCClient:
-    return app.state.coc
 
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:

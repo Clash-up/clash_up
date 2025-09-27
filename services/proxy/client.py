@@ -2,13 +2,15 @@ from typing import Any, Dict, Optional
 
 import httpx
 
-from services.coc.types import ClanInfo, CurrentWar
+from services.proxy.types import ClanInfo, CurrentWar
 from shared.settings import settings
 from shared.utils import encode_tag as e
 
 
 class CoCClient:
-    def __init__(self):
+    _client: httpx.AsyncClient
+
+    def start(self):
         self._client = httpx.AsyncClient(
             base_url="https://api.clashofclans.com/v1/",
             headers={"Authorization": f"Bearer {settings.COC_TOKEN}"},
@@ -39,3 +41,6 @@ class CoCClient:
     async def player_info(self, player_tag: str) -> Dict[str, Any]:
         endpoint = f"players/{e(player_tag)}"
         return (await self.api_get(endpoint)).json()
+
+
+client = CoCClient()
