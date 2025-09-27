@@ -134,7 +134,7 @@ class ClanInfo(ClashBasePydModel):
 class Player(ClashBasePydModel):
     tag: str
     name: str
-    townhall_level: NonNegativeInt = Field(alias="townHallLevel")
+    town_hall_level: NonNegativeInt
     exp_level: NonNegativeInt
     trophies: NonNegativeInt
     # best_trophies: NonNegativeInt
