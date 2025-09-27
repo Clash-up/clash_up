@@ -40,6 +40,7 @@ class PlayerSyncJob(BaseJob):
     async def _update_one(self, session: "AsyncSession", tag: str) -> None:
         # ----------------------------------------------
         # TODO: Poniższy kod jest do refaktoru pod kątem np optymalizacji liczby zapytań do bazy
+        #      i sesja cos srednio działa jak powinna
         player_client = await coc_client.player_info(tag)
         player_db = (
             (await session.execute(select(Player).where(Player.tag == tag))).scalars().first()
