@@ -4,6 +4,7 @@ import logging
 from typing import TYPE_CHECKING, Iterable
 
 from apscheduler.triggers.interval import IntervalTrigger
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from services.proxy.client import coc_client
@@ -40,7 +41,9 @@ class PlayerSyncJob(BaseJob):
         # ----------------------------------------------
         # TODO: Poniższy kod jest do refaktoru pod kątem np optymalizacji liczby zapytań do bazy
         player_client = await coc_client.player_info(tag)
-        player_db = await session.get(Player, player_client.tag)
+        player_db = (
+            (await session.execute(select(Player).where(Player.tag == tag))).scalars().first()
+        )
         if not player_db:
             player_db = Player(tag=tag)
             session.add(player_db)
